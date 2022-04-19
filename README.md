@@ -11,11 +11,9 @@ data science workflows.
 
 ## What's needed to participate.
 
-A web browser with internet access
-
-### An Openshift cluster
-
-A login will be provided.
+- A web browser with internet access.
+- An Openshift cluster with OpenDataHub and JupyterHub installed.
+  - A login will be provided.
  
 ### Launch Jupyter Hub
 OpenShift Data Science makes extensive use of Jupter Hub, a project that enables
