@@ -2,15 +2,15 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
-    app: rhods-fraud-detection
+    app: fraud-detection-workshop
     team: opendatahub
   name: fraud
-  namespace: bk-models
+  namespace: odh
 spec:
   endpoints:
   - interval: 30s
     path: /metrics
-    port: http
+    port: 8080-tcp
   selector:
     matchLabels:
-      app: rhods-fraud-detection
+      app: fraud-detection-workshop
