@@ -12,10 +12,13 @@ import time
 
 application = Flask(__name__)
 
-c = Counter('requests_count', 'Requests counter')
-legit = Counter('legit_count', 'Legitimate counter')
-fraud = Counter('fraud_count', 'Fraud counter')
-elapsedTime = Gauge('fraud_elapsed', 'Elapsed gauge')
+#
+# Define the Prometheus metrics.
+#
+c = Counter('model_server_requests_count', 'Requests Counter')
+legit = Counter('model_server_legit_count', 'Legitimate Counter')
+fraud = Counter('model_server_fraud_count', 'Fraud Counter')
+elapsedTime = Gauge('model_server_elapsed', 'Elapsed Time Gauge')
 
 logging.basicConfig(level=logging.INFO)
 
@@ -34,7 +37,7 @@ def create_prediction():
     p = predict(body)
     
     #
-    # Metrics
+    # Increment the prediction counts.
     #
     if p["prediction"] == "legitimate":
             legit.inc()
@@ -47,7 +50,9 @@ def create_prediction():
     elapsedTime.set(time.time() - t0)
     return r
 
+#
 # Add prometheus wsgi middleware to route /metrics requests
+#
 application.wsgi_app = DispatcherMiddleware(application.wsgi_app, {
     '/metrics': make_wsgi_app()
 })
