@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 from prediction import predict
 from prometheus_client import Counter
 from prometheus_client import Gauge
+from prometheus_client import Histogram
 from prometheus_client import start_http_server
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from prometheus_client import make_wsgi_app
@@ -15,10 +16,11 @@ application = Flask(__name__)
 #
 # Define the Prometheus metrics.
 #
-c = Counter('model_server_requests_count', 'Requests Counter')
-legit = Counter('model_server_legit_count', 'Legitimate Counter')
-fraud = Counter('model_server_fraud_count', 'Fraud Counter')
-elapsedTime = Gauge('model_server_elapsed', 'Elapsed Time Gauge')
+c = Counter('model_server_requests', 'Requests')
+legit = Counter('model_server_legit_predictions', 'Legitimate Transactions')
+fraud = Counter('model_server_fraud_predictions', 'Fraudulent Transactions')
+elapsedTime = Gauge('model_server_response_seconds', 'Response Time Gauge')
+latency = Histogram('model_server_request_latency_seconds', 'Prediction processing time', buckets=[0.005, 0.007, 0.008, 0.009, 0.01, 0.05])
 
 logging.basicConfig(level=logging.INFO)
 
@@ -48,6 +50,7 @@ def create_prediction():
     
     r = jsonify(p)
     elapsedTime.set(time.time() - t0)
+    latency.observe(time.time() - t0)
     return r
 
 #
