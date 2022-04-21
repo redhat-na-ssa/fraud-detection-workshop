@@ -20,7 +20,7 @@ c = Counter('model_server_requests', 'Requests')
 legit = Counter('model_server_legit_predictions', 'Legitimate Transactions')
 fraud = Counter('model_server_fraud_predictions', 'Fraudulent Transactions')
 elapsedTime = Gauge('model_server_response_seconds', 'Response Time Gauge')
-latency = Histogram('model_server_request_latency_seconds', 'Prediction processing time', buckets=[0.006, 0.007, 0.008, 0.009, 0.01, 0.05])
+latency = Histogram('model_server_request_latency_seconds', 'Prediction processing time', buckets=[0.006, 0.0065, 0.007, 0.008])
 
 logging.basicConfig(level=logging.INFO)
 
