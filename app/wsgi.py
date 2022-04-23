@@ -33,25 +33,26 @@ def status():
 @application.route('/predictions', methods=['POST'])
 def create_prediction():
     #t0 = time.time()
-    c.inc()
-    data = request.data or '{}'
-    body = json.loads(data)
-    p = predict(body)
-    
-    #
-    # Increment the prediction counts.
-    #
-    if p["prediction"] == "legitimate":
-            legit.inc()
-    if p["prediction"] == "fraud":
-            fraud.inc()
+    with latency.time():
+        c.inc()
+        data = request.data or '{}'
+        body = json.loads(data)
+        p = predict(body)
+        
+        #
+        # Increment the prediction counts.
+        #
+        if p["prediction"] == "legitimate":
+                legit.inc()
+        if p["prediction"] == "fraud":
+                fraud.inc()
 
-    logging.debug(f'Prediction: {p["prediction"]}')
-    
-    r = jsonify(p)
-    # elapsedTime.set(time.time() - t0)
-    # latency.observe(time.time() - t0)
-    return r
+        logging.debug(f'Prediction: {p["prediction"]}')
+        
+        r = jsonify(p)
+        # elapsedTime.set(time.time() - t0)
+        # latency.observe(time.time() - t0)
+        return r
 
 @application.errorhandler(404) 
 def invalid_route(e): 
