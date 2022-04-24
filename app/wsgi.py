@@ -18,8 +18,6 @@ application = Flask(__name__)
 c = Counter('model_server_requests', 'Requests')
 legit = Counter('model_server_legit_predictions', 'Legitimate Transactions')
 fraud = Counter('model_server_fraud_predictions', 'Fraudulent Transactions')
-# elapsedTime = Gauge('model_server_response_seconds', 'Response Time Gauge')
-# latency = Histogram('model_server_request_latency_seconds', 'Prediction processing time', buckets=[0.00525, 0.0055, 0.006, 0.00625, 0.0065, 0.007, 0.008])
 latency = Histogram('model_server_request_latency_seconds', 'Prediction processing time', buckets=[0.009, 0.0095, 0.01])
 
 logging.basicConfig(level=logging.INFO)
@@ -33,7 +31,6 @@ def status():
 @latency.time()
 @application.route('/predictions', methods=['POST'])
 def create_prediction():
-    #t0 = time.time()
     with latency.time():
         c.inc()
         data = request.data or '{}'
@@ -41,7 +38,7 @@ def create_prediction():
         p = predict(body)
         
         #
-        # Increment the prediction counts.
+        # Increment the prediction metric counts.
         #
         if p["prediction"] == "legitimate":
                 legit.inc()
@@ -51,8 +48,6 @@ def create_prediction():
         logging.debug(f'Prediction: {p["prediction"]}')
         
         r = jsonify(p)
-        # elapsedTime.set(time.time() - t0)
-        # latency.observe(time.time() - t0)
         return r
 
 @application.errorhandler(404) 
