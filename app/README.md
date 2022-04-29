@@ -2,11 +2,11 @@
 
 ## Relavent Files 
 ```
-├── requirements.txt        <- Python packages for s2i application
-├── 0_start_here.ipynb      <- Instructional notebook
-├── 1_run_flask.ipynb       <- Notebook for running flask locally to test
-├── 2_test_flask.ipynb      <- Notebook for testing flask requests
-├── 3_test_flask.ipynb      <- Notebook for building and depploying the model server
+├── requirements.txt                   <- Python packages for s2i application
+├── 0_start_here.ipynb                 <- Instructional notebook
+├── 1_run_flask.ipynb                  <- Notebook for running flask locally to test
+├── 2_test_flask.ipynb                 <- Notebook for testing flask requests
+├── 3_packaging_application.ipynb      <- Notebook for building and depploying the model server
 ├── .gitignore              <- standard python gitignore
 ├── .s2i                    <- hidden folder for advanced s2i configuration
 │   └── environment         <- s2i environment settings
