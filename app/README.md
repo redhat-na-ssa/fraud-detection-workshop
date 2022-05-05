@@ -33,7 +33,7 @@ oc new-app --image-stream=python:3.8-ubi8 --context-dir=/app --env=GUNICORN_CMD_
 ```
 Observe the new application workload as it is deployed.  This should included a Deployment, BuildConfig, and Service.  You can navigate to your newly created project and view the topology from the Openshift Web Console.
 
-#### Create a Route (Optional)
+#### Create a Route
 To use the service endpoint externally, expose a route to the new endpoint.  
 ```shell
 oc expose svc rhods-fraud-detection-workshop
