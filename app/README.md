@@ -3,26 +3,25 @@
 ## Relavent Files 
 ```
 ├── requirements.txt                   <- Python packages for s2i application
-├── 0_start_here.ipynb                 <- Instructional notebook
+├── 0_start_here.ipynb                 <- Introductory notebook (optional)
 ├── 1_run_flask.ipynb                  <- Notebook for running flask locally to test
 ├── 2_test_flask.ipynb                 <- Notebook for testing flask requests
 ├── 3_packaging_application.ipynb      <- Notebook for building and depploying the model server
-├── .gitignore              <- standard python gitignore
-├── .s2i                    <- hidden folder for advanced s2i configuration
+├── .gitignore              <- Standard python gitignore
+├── .s2i                    <- Hidden folder for advanced s2i configuration
 │   └── environment         <- s2i environment settings
-├── gunicorn_config.py      <- configuration for gunicorn when run in OpenShift
-├── prediction.py           <- the predict function called from Flask
-└── wsgi.py                 <- Basic Flask application with Prometheus metrics instrumentation.
+├── gunicorn_config.py      <- Configuration for gunicorn when run in OpenShift
+├── prediction.py           <- The predict function called from Flask
+└── wsgi.py                 <- Basic Flask model server application with Prometheus metrics instrumentation.
 ```
 
 #### Build and Deploy the Model Server from the Openshift Command Line
 
 #### Log in to OpenShift
 ```shell
-oc login --token=sha256~XYZ --server=https://api.my-cluster:6443
+oc login --server=https://api.my-cluster:6443
 ```
 #### Create a new OpenShift Project
-Create a new project namespace.
 ```shell
 oc new-project my-model-server
 ```
